@@ -1,25 +1,41 @@
 var express = require('express');
 var router = express.Router();
 var models  = require('../models');
+var Question = models.Question;
+var Choice = models.Choice;
 var Sequelize = require('sequelize');
 
 router.get('/', function(req, res, next) {
-  res.json({
-    questionText: 'hello puppets'
+  Question.findAll({
+    include: [ Choice ]
+  }).then(function(questions) {
+    res.json(questions);
   });
 });
 
 router.get('/random', function(req, res, next) {
-  models.Choice.findAll({}).
-    then(function(choices) {
-      console.log(choices);
-    });
-
-  models.Question.find({
+  Question.find({
     order: [
       Sequelize.fn( 'RAND' ),
     ],
-    include: [ models.Choice ]
+    include: [ Choice ]
+  }).then(function(question) {
+    res.json(question);
+  });
+});
+
+router.get('/:id', function(req, res, next) {
+  Question.find({
+    where: { id: req.params.id },
+    include: [ Choice ]
+  }).then(function(question) {
+    res.json(question);
+  });
+});
+
+router.post('/', function(req, res, next) {
+  Question.create(req.body, {
+    include: [ Choice ]
   }).then(function(question) {
     res.json(question);
   });

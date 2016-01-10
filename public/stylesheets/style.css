@@ -6,3 +6,25 @@ body {
 a {
   color: #00B7FF;
 }
+
+.survey-question {
+  word-wrap: break-word;
+}
+
+.survey-choice {
+  min-height: 2rem;
+  word-wrap: break-word;
+  border: 1px solid black;
+}
+
+.survey-choice:hover {
+  background-color: lightblue;
+}
+
+.survey-choice-selected {
+  background-color: lightgreen;
+}
+
+.survey-choice-selected:hover {
+  background-color: lightgreen;
+}

@@ -1,0 +1,7 @@
+const ResponseConstants = {
+  'RESPONSE_SUBMIT_COMPLETE': 'RESPONSE_SUBMIT_COMPLETE',
+  'RESPONSE_SUBMIT_ERROR': 'RESPONSE_SUBMIT_ERROR',
+  'RESPONSE_SUBMIT': 'RESPONSE_SUBMIT'
+};
+
+export default ResponseConstants;

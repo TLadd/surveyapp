@@ -1,15 +1,18 @@
-let React = require('react'),
-    ReactDOM = require('react-dom');
+import React from 'react';
 
 class Question extends React.Component {
 
   render() {
     return (
       <div className="survey-question">
-        <h1>Smelly things</h1>
+        <span>{this.props.questionText}</span>
       </div>
     );
   }
 }
 
-module.exports = Question;
+Question.propTypes = {
+  questionText: React.PropTypes.string
+}
+
+export default Question;

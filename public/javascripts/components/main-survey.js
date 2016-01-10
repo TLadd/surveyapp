@@ -1,8 +1,18 @@
-let Question = require('./question'),
-    React = require('react'),
-    ReactDOM = require('react-dom');
+import QuestionActions from '../actions/question-actions';
+import React from 'react';
+import SurveyContainer from './survey-container';
 
-ReactDOM.render(
-  <Question />,
-  document.getElementById('example')
-);
+export default class MainSurvey extends React.Component {
+
+  componentDidMount() {
+    QuestionActions.getRandom();
+  }
+
+  render() {
+    return (
+      <div className="survey-main">
+        <SurveyContainer />
+      </div>
+    );
+  }
+}

@@ -1,9 +1,10 @@
-import {Container} from 'flux/utils';
-import Question from './question';
-import Choices from './choices';
-import React from 'react';
-import SubmitButton from './submit-button';
-import _ from 'lodash';
+const Question = require('./question');
+const Choices = require('./choices');
+const QuestionActions = require('../actions/question-actions');
+const React = require('react');
+const ResponseActions = require('../actions/response-actions');
+const SubmitButton = require('./submit-button');
+const _ = require('lodash');
 
 class Survey extends React.Component {
 
@@ -43,6 +44,17 @@ class Survey extends React.Component {
   }
 
   onSubmit() {
+    this.setState({
+      submitEnabled: false
+    });
+
+    ResponseActions.submitResponse(this.props.question.id, this.state.selectedId).
+      then(() => {
+        this.setState({
+          selectedId: undefined
+        });
+        QuestionActions.getRandom();
+      }, () => console.log('fail'));
     console.log('submit me');
   }
 }
@@ -51,4 +63,4 @@ Survey.propTypes = {
   question: React.PropTypes.object
 }
 
-export default Survey;
+module.exports = Survey;

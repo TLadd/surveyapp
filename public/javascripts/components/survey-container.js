@@ -1,14 +1,14 @@
-import {Container} from 'flux/utils';
-import QuestionStore from '../stores/question-store';
-import React from 'react';
-import Survey from './survey';
+const Container = require('flux/utils').Container;
+const QuestionStore = require('../stores/question-store');
+const React = require('react');
+const Survey = require('./survey');
 
 class SurveyContainer extends React.Component {
   static getStores() {
     return [QuestionStore];
   }
 
-  static calculateState(prevState) {
+  static calculateState() {
     return {
       question: QuestionStore.getState(),
     };
@@ -24,4 +24,4 @@ class SurveyContainer extends React.Component {
 }
 
 const container = Container.create(SurveyContainer);
-export default container;
+module.exports = container;

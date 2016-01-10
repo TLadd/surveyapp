@@ -4,4 +4,4 @@ const ResponseConstants = {
   'RESPONSE_SUBMIT': 'RESPONSE_SUBMIT'
 };
 
-export default ResponseConstants;
+module.exports = ResponseConstants;

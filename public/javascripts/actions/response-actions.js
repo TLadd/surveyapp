@@ -1,6 +1,6 @@
-import AppDispatcher from '../dispatcher/app-dispatcher';
-import ResponseContants from '../constants/response-constants';
-import $ from 'jquery';
+const AppDispatcher = require('../dispatcher/app-dispatcher');
+const ResponseConstants = require('../constants/response-constants');
+const $ = require('jquery');
 
 const ResponseActions = {
   submitResponse: function(questionId, choiceId) {
@@ -15,24 +15,24 @@ const ResponseActions = {
 
       success: function(data) {
         AppDispatcher.handleServerAction({
-          type: ResponseContants.RESPONSE_SUBMIT_COMPLETE,
+          type: ResponseConstants.RESPONSE_SUBMIT_COMPLETE,
           response: data
         });
       },
 
       beforeSend: function() {
         AppDispatcher.handleServerAction({
-          type: ResponseContants.RESPONSE_SUBMIT,
+          type: ResponseConstants.RESPONSE_SUBMIT,
         });
       },
 
       error: function() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.RESPONSE_SUBMIT_ERROR,
+          type: ResponseConstants.RESPONSE_SUBMIT_ERROR,
         });
       }
     });
   }
-}
+};
 
-export default ResponseActions;
+module.exports = ResponseActions;

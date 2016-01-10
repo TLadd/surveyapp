@@ -1,6 +1,6 @@
-import Choice from './choice'
-import React from 'react';
-let _ = require('lodash');
+const Choice = require('./choice');
+const React = require('react');
+const _ = require('lodash');
 
 class Choices extends React.Component {
 
@@ -28,4 +28,4 @@ Choices.propTypes = {
   selectedId: React.PropTypes.number
 }
 
-export default Choices;
+module.exports = Choices;

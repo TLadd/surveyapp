@@ -1,8 +1,8 @@
-import QuestionActions from '../actions/question-actions';
-import React from 'react';
-import SurveyContainer from './survey-container';
+const QuestionActions = require('../actions/question-actions');
+const React = require('react');
+const SurveyContainer = require('./survey-container');
 
-export default class MainSurvey extends React.Component {
+class MainSurvey extends React.Component {
 
   componentDidMount() {
     QuestionActions.getRandom();
@@ -16,3 +16,5 @@ export default class MainSurvey extends React.Component {
     );
   }
 }
+
+module.exports = MainSurvey;

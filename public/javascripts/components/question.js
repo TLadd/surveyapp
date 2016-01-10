@@ -1,11 +1,11 @@
-import React from 'react';
+const React = require('react');
 
 class Question extends React.Component {
 
   render() {
     return (
       <div className="survey-question">
-        <span>{this.props.questionText}</span>
+        <span className="survey-question-text">{this.props.questionText}</span>
       </div>
     );
   }
@@ -15,4 +15,4 @@ Question.propTypes = {
   questionText: React.PropTypes.string
 }
 
-export default Question;
+module.exports = Question;

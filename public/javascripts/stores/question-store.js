@@ -1,6 +1,6 @@
-import AppDispatcher from '../dispatcher/app-dispatcher';
-import QuestionContants from '../constants/question-constants';
-import {ReduceStore} from 'flux/utils';
+const AppDispatcher = require('../dispatcher/app-dispatcher');
+const QuestionContants = require('../constants/question-constants');
+const ReduceStore = require('flux/utils').ReduceStore;
 
 class QuestionStore extends ReduceStore {
   getInitialState() {
@@ -22,4 +22,4 @@ class QuestionStore extends ReduceStore {
 }
 
 const instance = new QuestionStore(AppDispatcher);
-export default instance;
+module.exports = instance;

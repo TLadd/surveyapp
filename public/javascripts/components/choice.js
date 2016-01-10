@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import React from 'react';
-import _ from 'lodash';
+const classNames = require('classnames');
+const React = require('react');
+const _ = require('lodash');
 
 class Choice extends React.Component {
 
@@ -18,7 +18,7 @@ class Choice extends React.Component {
 
     return (
       <div className={classes} onClick={this.onClick}>
-        <span>{this.props.choice.choiceText}</span>
+        <span className="survey-choice-text">{this.props.choice.choiceText}</span>
       </div>
     );
   }
@@ -34,4 +34,4 @@ Choice.propTypes = {
   selected: React.PropTypes.bool
 }
 
-export default Choice;
+module.exports = Choice;

@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class SubmitButton extends React.Component {
 
@@ -23,4 +23,4 @@ SubmitButton.propTypes = {
   disabled: React.PropTypes.bool
 }
 
-export default SubmitButton;
+module.exports = SubmitButton;

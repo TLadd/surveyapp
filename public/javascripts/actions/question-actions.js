@@ -1,6 +1,6 @@
-import AppDispatcher from '../dispatcher/app-dispatcher';
-import QuestionContants from '../constants/question-constants';
-import $ from 'jquery';
+const AppDispatcher = require('../dispatcher/app-dispatcher');
+const QuestionContants = require('../constants/question-constants');
+const $ = require('jquery');
 
 const QuestionActions = {
   getRandom: function() {
@@ -31,4 +31,4 @@ const QuestionActions = {
   }
 }
 
-export default QuestionActions;
+module.exports = QuestionActions;

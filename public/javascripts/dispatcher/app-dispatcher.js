@@ -1,4 +1,4 @@
-import {Dispatcher} from 'flux';
+const Dispatcher = require('flux').Dispatcher;
 
 const AppDispatcher = new Dispatcher();
 
@@ -16,4 +16,4 @@ AppDispatcher.handleServerAction = function(action) {
   this.dispatch(action);
 };
 
-export default AppDispatcher;
+module.exports = AppDispatcher;

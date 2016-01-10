@@ -4,4 +4,4 @@ const QuestionConstants = {
   'QUESTION_RANDOM': 'QUESTION_RANDOM'
 };
 
-export default QuestionConstants;
+module.exports = QuestionConstants;

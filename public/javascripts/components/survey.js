@@ -54,8 +54,7 @@ class Survey extends React.Component {
           selectedId: undefined
         });
         QuestionActions.getRandom();
-      }, () => console.log('fail'));
-    console.log('submit me');
+      });
   }
 }
 

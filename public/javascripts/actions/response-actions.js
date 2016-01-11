@@ -9,8 +9,8 @@ const ResponseActions = {
       type: 'POST',
       dataType: 'json',
       data: {
-        questionId: questionId,
-        choiceId: choiceId
+        QuestionId: questionId,
+        ChoiceId: choiceId
       },
 
       success: function(data) {

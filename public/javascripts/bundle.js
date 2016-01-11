@@ -47865,8 +47865,8 @@ var ResponseActions = {
       type: 'POST',
       dataType: 'json',
       data: {
-        questionId: questionId,
-        choiceId: choiceId
+        QuestionId: questionId,
+        ChoiceId: choiceId
       },
 
       success: function success(data) {
@@ -48220,6 +48220,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Question = require('./question');
 var Choices = require('./choices');
+var QuestionActions = require('../actions/question-actions');
 var React = require('react');
 var ResponseActions = require('../actions/response-actions');
 var SubmitButton = require('./submit-button');
@@ -48282,10 +48283,7 @@ var Survey = function (_React$Component) {
           selectedId: undefined
         });
         QuestionActions.getRandom();
-      }, function () {
-        return console.log('fail');
       });
-      console.log('submit me');
     }
   }]);
 
@@ -48298,7 +48296,7 @@ Survey.propTypes = {
 
 module.exports = Survey;
 
-},{"../actions/response-actions":183,"./choices":185,"./question":187,"./submit-button":188,"lodash":24,"react":181}],191:[function(require,module,exports){
+},{"../actions/question-actions":182,"../actions/response-actions":183,"./choices":185,"./question":187,"./submit-button":188,"lodash":24,"react":181}],191:[function(require,module,exports){
 'use strict';
 
 var QuestionConstants = {

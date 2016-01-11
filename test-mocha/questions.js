@@ -11,7 +11,7 @@ var _ = require('lodash');
 chai.use(chaiHttp);
 
 describe('Questions', function() {
-  beforeEach(function(){
+  beforeEach(function() {
     return models.sequelize.drop({logging: false, cascade: true}).then(function() {
       return models.sequelize.sync({logging: false});
     });

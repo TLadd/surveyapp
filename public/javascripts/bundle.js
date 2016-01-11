@@ -48348,7 +48348,7 @@ var MainSurvey = require('./components/main-survey');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-ReactDOM.render(React.createElement(MainSurvey, null), document.getElementById('example'));
+ReactDOM.render(React.createElement(MainSurvey, null), document.getElementById('survey-app'));
 
 },{"./components/main-survey":186,"react":181,"react-dom":25}],195:[function(require,module,exports){
 'use strict';

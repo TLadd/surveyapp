@@ -7,12 +7,24 @@ a {
   color: #00B7FF;
 }
 
+.survey {
+  max-width: 40em;
+  margin: 0 auto;
+}
+
 .survey-question {
   word-wrap: break-word;
+  margin-bottom: 1rem;
+}
+
+.survey-choices {
+  margin-bottom: 1rem;
 }
 
 .survey-choice {
   min-height: 2rem;
+  border-radius: 5px;
+  margin-bottom: 5px;
   word-wrap: break-word;
   border: 1px solid black;
 }

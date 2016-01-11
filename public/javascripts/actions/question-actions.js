@@ -28,6 +28,33 @@ const QuestionActions = {
         });
       }
     });
+  },
+
+  getAll: function() {
+    return $.ajax({
+      url: '/questions',
+      type: 'GET',
+      dataType: 'json',
+
+      success: function(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionContants.QUESTION_ALL_LOAD_COMPLETE,
+          questions: data
+        });
+      },
+
+      beforeSend: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionContants.QUESTION_ALL_LOAD,
+        });
+      },
+
+      error: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionContants.QUESTION_ALL_LOAD_ERROR,
+        });
+      }
+    });
   }
 }
 

@@ -4,5 +4,5 @@ const ReactDOM = require('react-dom');
 
 ReactDOM.render(
   <MainSurvey/>,
-  document.getElementById('example')
+  document.getElementById('survey-app')
 );

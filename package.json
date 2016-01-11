@@ -18,6 +18,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "flux": "^2.1.1",
+    "history": "^1.17.0",
     "jade": "~1.11.0",
     "jquery": "^2.2.0",
     "lodash": "^3.10.1",
@@ -26,6 +27,7 @@
     "node-uuid": "^1.4.7",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
+    "react-router": "^1.0.3",
     "sequelize": "^3.17.1",
     "sequelize-cli": "^2.2.1",
     "serve-favicon": "~2.3.0"

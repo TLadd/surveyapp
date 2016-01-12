@@ -8,7 +8,7 @@ class QuestionList extends React.Component {
   render() {
     const questions = _.map(this.props.questions, question => {
       return (
-        <Link key={question.id} to={`/question/${question.id}`}>
+        <Link key={question.id} to={`/questions/${question.id}`}>
           <Question questionText={question.questionText} />
         </Link>
       );

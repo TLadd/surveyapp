@@ -47817,8 +47817,9 @@ module.exports = require('./lib/React');
 'use strict';
 
 var AppDispatcher = require('../dispatcher/app-dispatcher');
-var QuestionContants = require('../constants/question-constants');
+var QuestionConstants = require('../constants/question-constants');
 var $ = require('jquery');
+var _ = require('lodash');
 
 var QuestionActions = {
   getRandom: function getRandom() {
@@ -47829,20 +47830,82 @@ var QuestionActions = {
 
       success: function success(data) {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM_COMPLETE,
+          type: QuestionConstants.QUESTION_RANDOM_COMPLETE,
           question: data
         });
       },
 
       beforeSend: function beforeSend() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM
+          type: QuestionConstants.QUESTION_RANDOM
         });
       },
 
       error: function error() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM_ERROR
+          type: QuestionConstants.QUESTION_RANDOM_ERROR
+        });
+      }
+    });
+  },
+
+  getAll: function getAll() {
+    return $.ajax({
+      url: '/questions',
+      type: 'GET',
+      dataType: 'json',
+
+      success: function success(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_ALL_LOAD_COMPLETE,
+          questions: data
+        });
+      },
+
+      beforeSend: function beforeSend() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_ALL_LOAD
+        });
+      },
+
+      error: function error() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_ALL_LOAD_ERROR
+        });
+      }
+    });
+  },
+
+  createQuestion: function createQuestion(questionText, choices) {
+    var choiceObjects = _.map(choices, function (choice) {
+      return { choiceText: choice };
+    });
+    return $.ajax({
+      url: '/questions/',
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify({
+        questionText: questionText,
+        Choices: choiceObjects
+      }),
+
+      success: function success(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT_COMPLETE,
+          response: data
+        });
+      },
+
+      beforeSend: function beforeSend() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT
+        });
+      },
+
+      error: function error() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT_ERROR
         });
       }
     });
@@ -47851,7 +47914,7 @@ var QuestionActions = {
 
 module.exports = QuestionActions;
 
-},{"../constants/question-constants":191,"../dispatcher/app-dispatcher":193,"jquery":23}],183:[function(require,module,exports){
+},{"../constants/question-constants":192,"../dispatcher/app-dispatcher":194,"jquery":23,"lodash":24}],183:[function(require,module,exports){
 'use strict';
 
 var AppDispatcher = require('../dispatcher/app-dispatcher');
@@ -47893,7 +47956,7 @@ var ResponseActions = {
 
 module.exports = ResponseActions;
 
-},{"../constants/response-constants":192,"../dispatcher/app-dispatcher":193,"jquery":23}],184:[function(require,module,exports){
+},{"../constants/response-constants":193,"../dispatcher/app-dispatcher":194,"jquery":23}],184:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48056,7 +48119,45 @@ var MainSurvey = function (_React$Component) {
 
 module.exports = MainSurvey;
 
-},{"../actions/question-actions":182,"./survey-container":189,"react":181}],187:[function(require,module,exports){
+},{"../actions/question-actions":182,"./survey-container":190,"react":181}],187:[function(require,module,exports){
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+
+var NoMoreQuestions = function (_React$Component) {
+  _inherits(NoMoreQuestions, _React$Component);
+
+  function NoMoreQuestions() {
+    _classCallCheck(this, NoMoreQuestions);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(NoMoreQuestions).apply(this, arguments));
+  }
+
+  _createClass(NoMoreQuestions, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "div",
+        { className: "no-more-questions" },
+        "You have answered all the questions!"
+      );
+    }
+  }]);
+
+  return NoMoreQuestions;
+}(React.Component);
+
+module.exports = NoMoreQuestions;
+
+},{"react":181}],188:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48102,7 +48203,7 @@ Question.propTypes = {
 
 module.exports = Question;
 
-},{"react":181}],188:[function(require,module,exports){
+},{"react":181}],189:[function(require,module,exports){
 "use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48136,11 +48237,6 @@ var SubmitButton = function (_React$Component) {
           onClick: this.props.onSubmit })
       );
     }
-  }, {
-    key: "onClick",
-    value: function onClick() {
-      console.log("WHATOGJREOJGEROG");
-    }
   }]);
 
   return SubmitButton;
@@ -48153,7 +48249,7 @@ SubmitButton.propTypes = {
 
 module.exports = SubmitButton;
 
-},{"react":181}],189:[function(require,module,exports){
+},{"react":181}],190:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48207,7 +48303,7 @@ var SurveyContainer = function (_React$Component) {
 var container = Container.create(SurveyContainer);
 module.exports = container;
 
-},{"../stores/question-store":195,"./survey":190,"flux/utils":21,"react":181}],190:[function(require,module,exports){
+},{"../stores/question-store":196,"./survey":191,"flux/utils":21,"react":181}],191:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48218,8 +48314,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Question = require('./question');
 var Choices = require('./choices');
+var NoMoreQuestions = require('./no-more-questions');
+var Question = require('./question');
 var QuestionActions = require('../actions/question-actions');
 var React = require('react');
 var ResponseActions = require('../actions/response-actions');
@@ -48246,7 +48343,9 @@ var Survey = function (_React$Component) {
   _createClass(Survey, [{
     key: 'render',
     value: function render() {
-      if (!this.props.question) {
+      if (_.isEmpty(this.props.question)) {
+        return React.createElement(NoMoreQuestions, null);
+      } else if (!this.props.question) {
         return null;
       }
 
@@ -48296,18 +48395,26 @@ Survey.propTypes = {
 
 module.exports = Survey;
 
-},{"../actions/question-actions":182,"../actions/response-actions":183,"./choices":185,"./question":187,"./submit-button":188,"lodash":24,"react":181}],191:[function(require,module,exports){
+},{"../actions/question-actions":182,"../actions/response-actions":183,"./choices":185,"./no-more-questions":187,"./question":188,"./submit-button":189,"lodash":24,"react":181}],192:[function(require,module,exports){
 'use strict';
 
 var QuestionConstants = {
   'QUESTION_RANDOM_COMPLETE': 'QUESTION_RANDOM_COMPLETE',
   'QUESTION_RANDOM_ERROR': 'QUESTION_RANDOM_ERROR',
-  'QUESTION_RANDOM': 'QUESTION_RANDOM'
+  'QUESTION_RANDOM': 'QUESTION_RANDOM',
+
+  'QUESTION_ALL_LOAD_COMPLETE': 'QUESTION_ALL_LOAD_COMPLETE',
+  'QUESTION_ALL_LOAD_ERROR': 'QUESTION_ALL_LOAD_ERROR',
+  'QUESTION_ALL_LOAD': 'QUESTION_ALL_LOAD',
+
+  'QUESTION_SUBMIT_COMPLETE': 'QUESTION_SUBMIT_COMPLETE',
+  'QUESTION_SUBMIT_ERROR': 'QUESTION_SUBMIT_ERROR',
+  'QUESTION_SUBMIT': 'QUESTION_SUBMIT'
 };
 
 module.exports = QuestionConstants;
 
-},{}],192:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 'use strict';
 
 var ResponseConstants = {
@@ -48318,7 +48425,7 @@ var ResponseConstants = {
 
 module.exports = ResponseConstants;
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 'use strict';
 
 var Dispatcher = require('flux').Dispatcher;
@@ -48341,7 +48448,7 @@ AppDispatcher.handleServerAction = function (action) {
 
 module.exports = AppDispatcher;
 
-},{"flux":12}],194:[function(require,module,exports){
+},{"flux":12}],195:[function(require,module,exports){
 'use strict';
 
 var MainSurvey = require('./components/main-survey');
@@ -48350,7 +48457,7 @@ var ReactDOM = require('react-dom');
 
 ReactDOM.render(React.createElement(MainSurvey, null), document.getElementById('survey-app'));
 
-},{"./components/main-survey":186,"react":181,"react-dom":25}],195:[function(require,module,exports){
+},{"./components/main-survey":186,"react":181,"react-dom":25}],196:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -48362,7 +48469,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var AppDispatcher = require('../dispatcher/app-dispatcher');
-var QuestionContants = require('../constants/question-constants');
+var QuestionConstants = require('../constants/question-constants');
 var ReduceStore = require('flux/utils').ReduceStore;
 
 var QuestionStore = function (_ReduceStore) {
@@ -48383,10 +48490,10 @@ var QuestionStore = function (_ReduceStore) {
     key: 'reduce',
     value: function reduce(state, action) {
       switch (action.type) {
-        case QuestionContants.QUESTION_RANDOM_COMPLETE:
-          return action.question;
+        case QuestionConstants.QUESTION_RANDOM_COMPLETE:
+          return action.question ? action.question : {};
 
-        case QuestionContants.QUESTION_RANDOM:
+        case QuestionConstants.QUESTION_RANDOM:
           return null;
 
         default:
@@ -48401,4 +48508,4 @@ var QuestionStore = function (_ReduceStore) {
 var instance = new QuestionStore(AppDispatcher);
 module.exports = instance;
 
-},{"../constants/question-constants":191,"../dispatcher/app-dispatcher":193,"flux/utils":21}]},{},[194]);
+},{"../constants/question-constants":192,"../dispatcher/app-dispatcher":194,"flux/utils":21}]},{},[195]);

@@ -1,6 +1,7 @@
 const AppDispatcher = require('../dispatcher/app-dispatcher');
-const QuestionContants = require('../constants/question-constants');
+const QuestionConstants = require('../constants/question-constants');
 const $ = require('jquery');
+const _ = require('lodash');
 
 const QuestionActions = {
   getRandom: function() {
@@ -11,20 +12,20 @@ const QuestionActions = {
 
       success: function(data) {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM_COMPLETE,
+          type: QuestionConstants.QUESTION_RANDOM_COMPLETE,
           question: data
         });
       },
 
       beforeSend: function() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM,
+          type: QuestionConstants.QUESTION_RANDOM,
         });
       },
 
       error: function() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_RANDOM_ERROR,
+          type: QuestionConstants.QUESTION_RANDOM_ERROR,
         });
       }
     });
@@ -38,24 +39,57 @@ const QuestionActions = {
 
       success: function(data) {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_ALL_LOAD_COMPLETE,
+          type: QuestionConstants.QUESTION_ALL_LOAD_COMPLETE,
           questions: data
         });
       },
 
       beforeSend: function() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_ALL_LOAD,
+          type: QuestionConstants.QUESTION_ALL_LOAD,
         });
       },
 
       error: function() {
         AppDispatcher.handleServerAction({
-          type: QuestionContants.QUESTION_ALL_LOAD_ERROR,
+          type: QuestionConstants.QUESTION_ALL_LOAD_ERROR,
+        });
+      }
+    });
+  },
+
+  createQuestion: function(questionText, choices) {
+    const choiceObjects = _.map(choices, choice => ({choiceText: choice}));
+    return $.ajax({
+      url: '/questions/',
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify({
+        questionText: questionText,
+        Choices: choiceObjects
+      }),
+
+      success: function(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT_COMPLETE,
+          response: data
+        });
+      },
+
+      beforeSend: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT,
+        });
+      },
+
+      error: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_SUBMIT_ERROR,
         });
       }
     });
   }
-}
+};
 
 module.exports = QuestionActions;

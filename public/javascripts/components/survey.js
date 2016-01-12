@@ -1,5 +1,6 @@
-const Question = require('./question');
 const Choices = require('./choices');
+const NoMoreQuestions = require('./no-more-questions');
+const Question = require('./question');
 const QuestionActions = require('../actions/question-actions');
 const React = require('react');
 const ResponseActions = require('../actions/response-actions');
@@ -20,7 +21,11 @@ class Survey extends React.Component {
   }
 
   render() {
-    if(!this.props.question) {
+    if(_.isEmpty(this.props.question)) {
+      return (
+        <NoMoreQuestions/>
+      );
+    } else if(!this.props.question) {
       return null;
     }
 

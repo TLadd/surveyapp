@@ -26,6 +26,7 @@
     "mysql": "^2.10.0",
     "node-uuid": "^1.4.7",
     "react": "^0.14.6",
+    "react-addons-update": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "^1.0.3",
     "sequelize": "^3.17.1",

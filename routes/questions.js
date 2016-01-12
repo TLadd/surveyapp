@@ -16,9 +16,10 @@ router.get('/', function(req, res, next) {
 router.get('/random', function(req, res, next) {
   Question.find({
     order: [
-      Sequelize.fn( 'RAND' ),
+      [Sequelize.fn( 'RAND' )]
     ],
-    include: [ Choice ]
+    include: [ Choice ],
+    where: Sequelize.literal('NOT EXISTS (SELECT id FROM Responses WHERE Responses.QuestionId = Question.id)')
   }).then(function(question) {
     res.json(question);
   });
@@ -34,6 +35,7 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+
   Question.create(req.body, {
     include: [ Choice ]
   }).then(function(question) {

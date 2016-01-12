@@ -12,10 +12,6 @@ class SubmitButton extends React.Component {
       </div>
     );
   }
-
-  onClick() {
-    console.log("WHATOGJREOJGEROG");
-  }
 }
 
 SubmitButton.propTypes = {

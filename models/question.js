@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Question = sequelize.define("Question", {
-    questionText: DataTypes.STRING
+    questionText: DataTypes.TEXT
   }, {
     classMethods: {
       associate: function(models) {

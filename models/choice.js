@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Choice = sequelize.define("Choice", {
-    choiceText: DataTypes.STRING,
+    choiceText: DataTypes.TEXT,
     numChosen: {
       type: DataTypes.INTEGER.UNSIGNED,
       defaultValue: 0

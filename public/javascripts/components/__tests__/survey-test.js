@@ -1,6 +1,7 @@
 jest.dontMock('../survey');
 
 const Choices = require('../choices');
+const NoMoreQuestions = require('../no-more-questions');
 const Question = require('../question');
 const QuestionActions = require('../../actions/question-actions');
 const React = require('react');
@@ -75,6 +76,12 @@ describe('Survey', () => {
 
     expect(submit.props.disabled).toEqual(false);
     expect(choices.props.selectedId).toEqual(1);
+  });
+
+  it('should render a NoMoreQuestions component if there are no mroe questions', () => {
+    const el = renderComponent({question: {}});
+
+    TestUtils.findRenderedComponentWithType(el, NoMoreQuestions);
   });
 
   it('should submit a response and on submit', () => {

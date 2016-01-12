@@ -52077,6 +52077,33 @@ var QuestionActions = {
     });
   },
 
+  getQuestion: function getQuestion(id) {
+    return $.ajax({
+      url: '/questions/' + id,
+      type: 'GET',
+      dataType: 'json',
+
+      success: function success(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_COMPLETE,
+          question: data
+        });
+      },
+
+      beforeSend: function beforeSend() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD
+        });
+      },
+
+      error: function error() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_ERROR
+        });
+      }
+    });
+  },
+
   getAll: function getAll() {
     return $.ajax({
       url: '/questions',
@@ -52161,11 +52188,9 @@ ReactDOM.render(React.createElement(
   { history: browserHistory },
   React.createElement(Route, { path: '/', component: MainAdmin }),
   React.createElement(Route, { path: '/questions', component: AdminQuestionList }),
-  React.createElement(Route, { path: '/questions/new', component: QuestionForm })
+  React.createElement(Route, { path: '/questions/new', component: QuestionForm }),
+  React.createElement(Route, { path: '/questions/:id', component: AdminQuestion })
 ), document.getElementById('survey-admin'));
-
-//<Route path="/questions/:id" component={AdminQuestion}/>
-//<Route path="/questions/new" component={QuestionForm}/>
 
 },{"./components/admin-question":233,"./components/admin-question-list":232,"./components/main-admin":236,"./components/question-form":238,"react":227,"react-dom":46,"react-router":66}],232:[function(require,module,exports){
 'use strict';
@@ -52228,9 +52253,67 @@ var container = Container.create(AdminQuestionList);
 module.exports = container;
 
 },{"../actions/question-actions":230,"../stores/admin-question-store":244,"./question-list":239,"flux/utils":23,"react":227}],233:[function(require,module,exports){
-"use strict";
+'use strict';
 
-},{}],234:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AdminQuestionStore = require('../stores/admin-question-store');
+var Container = require('flux/utils').Container;
+var QuestionActions = require('../actions/question-actions');
+var React = require('react');
+
+var AdminQuestion = function (_React$Component) {
+  _inherits(AdminQuestion, _React$Component);
+
+  function AdminQuestion() {
+    _classCallCheck(this, AdminQuestion);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(AdminQuestion).apply(this, arguments));
+  }
+
+  _createClass(AdminQuestion, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!AdminQuestionStore.hasQuestion(this.props.params.id)) {
+        QuestionActions.getQuestion(this.props.params.id);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'admin-question' },
+        JSON.stringify(this.state.question)
+      );
+    }
+  }], [{
+    key: 'getStores',
+    value: function getStores() {
+      return [AdminQuestionStore];
+    }
+  }, {
+    key: 'calculateState',
+    value: function calculateState(prevState, props) {
+      return {
+        question: AdminQuestionStore.getQuestion(props.params.id)
+      };
+    }
+  }]);
+
+  return AdminQuestion;
+}(React.Component);
+
+var container = Container.create(AdminQuestion, { withProps: true });
+module.exports = container;
+
+},{"../actions/question-actions":230,"../stores/admin-question-store":244,"flux/utils":23,"react":227}],234:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -52743,7 +52826,11 @@ var QuestionConstants = {
 
   'QUESTION_SUBMIT_COMPLETE': 'QUESTION_SUBMIT_COMPLETE',
   'QUESTION_SUBMIT_ERROR': 'QUESTION_SUBMIT_ERROR',
-  'QUESTION_SUBMIT': 'QUESTION_SUBMIT'
+  'QUESTION_SUBMIT': 'QUESTION_SUBMIT',
+
+  'QUESTION_LOAD_COMPLETE': 'QUESTION_LOAD_COMPLETE',
+  'QUESTION_LOAD_ERROR': 'QUESTION_LOAD_ERROR',
+  'QUESTION_LOAD': 'QUESTION_LOAD'
 };
 
 module.exports = QuestionConstants;
@@ -52785,6 +52872,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AppDispatcher = require('../dispatcher/app-dispatcher');
 var QuestionConstants = require('../constants/question-constants');
 var ReduceStore = require('flux/utils').ReduceStore;
+var _ = require('lodash');
 
 var AdminQuestionStore = function (_ReduceStore) {
   _inherits(AdminQuestionStore, _ReduceStore);
@@ -52807,12 +52895,26 @@ var AdminQuestionStore = function (_ReduceStore) {
         case QuestionConstants.QUESTION_ALL_LOAD_COMPLETE:
           return action.questions;
 
-        case QuestionConstants.QUESTION_ALL_LOAD:
-          return null;
+        case QuestionConstants.QUESTION_LOAD_COMPLETE:
+          return [action.question];
 
         default:
           return state;
       }
+    }
+  }, {
+    key: 'hasQuestion',
+    value: function hasQuestion(id) {
+      return _.any(this.getState(), function (question) {
+        return question.id === parseInt(id);
+      });
+    }
+  }, {
+    key: 'getQuestion',
+    value: function getQuestion(id) {
+      return _.find(this.getState(), function (question) {
+        return question.id === parseInt(id);
+      });
     }
   }]);
 
@@ -52822,4 +52924,4 @@ var AdminQuestionStore = function (_ReduceStore) {
 var instance = new AdminQuestionStore(AppDispatcher);
 module.exports = instance;
 
-},{"../constants/question-constants":242,"../dispatcher/app-dispatcher":243,"flux/utils":23}]},{},[231]);
+},{"../constants/question-constants":242,"../dispatcher/app-dispatcher":243,"flux/utils":23,"lodash":43}]},{},[231]);

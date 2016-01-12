@@ -11,7 +11,7 @@ class AdminQuestionList extends React.Component {
 
   static calculateState() {
     return {
-      questions: AdminQuestionStore.getState(),
+      questions: AdminQuestionStore.getState()
     };
   }
 

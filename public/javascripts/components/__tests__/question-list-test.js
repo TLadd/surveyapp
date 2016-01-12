@@ -7,7 +7,7 @@ const React = require('react');
 const TestUtils = require('react-addons-test-utils');
 const _ = require('lodash');
 
-describe('Choices', () => {
+describe('QuestionList', () => {
 
   const renderComponent = function(options) {
     let props = _.extend({}, {

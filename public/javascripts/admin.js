@@ -14,10 +14,7 @@ ReactDOM.render(
     <Route path="/" component={MainAdmin}/>
     <Route path="/questions" component={AdminQuestionList}/>
     <Route path="/questions/new" component={QuestionForm}/>
+    <Route path="/questions/:id" component={AdminQuestion}/>
   </Router>,
   document.getElementById('survey-admin')
 );
-
-
-//<Route path="/questions/:id" component={AdminQuestion}/>
-//<Route path="/questions/new" component={QuestionForm}/>

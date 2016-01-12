@@ -31,6 +31,33 @@ const QuestionActions = {
     });
   },
 
+  getQuestion: function(id) {
+    return $.ajax({
+      url: '/questions/' + id,
+      type: 'GET',
+      dataType: 'json',
+
+      success: function(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_COMPLETE,
+          question: data
+        });
+      },
+
+      beforeSend: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD,
+        });
+      },
+
+      error: function() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_ERROR,
+        });
+      }
+    });
+  },
+
   getAll: function() {
     return $.ajax({
       url: '/questions',

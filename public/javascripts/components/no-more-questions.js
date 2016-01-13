@@ -4,9 +4,9 @@ class NoMoreQuestions extends React.Component {
 
   render() {
     return (
-      <div className="no-more-questions">
+      <h2 className="no-more-questions">
         You have answered all the questions!
-      </div>
+      </h2>
     );
   }
 }

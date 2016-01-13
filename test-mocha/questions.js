@@ -18,7 +18,7 @@ describe('Questions', function() {
   });
 
   var createQuestion = function(options) {
-    Question.create(_.extend({
+    return Question.create(_.extend({
       questionText: 'A great question',
       Choices: [
         { choiceText: 'Choice 1'},
@@ -41,50 +41,98 @@ describe('Questions', function() {
     };
   };
 
-  it('should return all questions on /questions GET', function(done) {
-    createQuestion({id: 1, questionText: 'Question 1'});
-    createQuestion({id: 2, questionText: 'Question 2'});
-
-    chai.request(server)
-      .get('/questions')
-      .end(function(err, res) {
-        expect(res.status).equal(200);
-        expect(res.body.length).equal(2);
-        var question1 = res.body[0];
-        var question2 = res.body[1];
-        expect(question1.questionText).equal('Question 1');
-        expect(question2.questionText).equal('Question 2');
-        done();
+  describe('on /questions GET', function(done) {
+    it('should return all questions on /questions GET', function(done) {
+      createQuestion({id: 1, questionText: 'Question 1'}).then(function() {
+        createQuestion({id: 2, questionText: 'Question 2'}).then(function() {
+          chai.request(server)
+            .get('/questions')
+            .auth('admin', 'letmein')
+            .end(function(err, res) {
+              expect(res.status).equal(200);
+              expect(res.body.length).equal(2);
+              var question1 = res.body[0];
+              var question2 = res.body[1];
+              expect(question1.questionText).equal('Question 1');
+              expect(question2.questionText).equal('Question 2');
+              done();
+            });
+        });
       });
+
+    });
+
+    it('should return 401 if not authenticated', function(done) {
+      chai.request(server)
+        .get('/questions')
+        .end(function(err, res) {
+          expect(res.status).equal(401);
+          done();
+        });
+    });
   });
 
   it('should return a random question on /questions/random GET', function(done) {
-    createQuestion();
-
-    chai.request(server)
-      .get('/questions/random')
-      .end(verifyQuestion(done));
+    createQuestion().then(function() {
+      chai.request(server)
+        .get('/questions/random')
+        .end(verifyQuestion(done));
+    });
   });
 
-  it('should return the specified question on /questions/:id GET', function(done) {
-    createQuestion({id: 1});
-    createQuestion({id: 2, questionText: 'Wrong question'});
+  describe('on /questions/:id GET', function(done) {
+    it('should return the specified question', function(done) {
+      createQuestion({id: 1}).then(function() {
+        createQuestion({id: 2, questionText: 'Wrong question'}).then(function() {
+          chai.request(server)
+            .get('/questions/1')
+            .auth('admin', 'letmein')
+            .end(verifyQuestion(done));
+        });
+      });
+    });
 
-    chai.request(server)
-      .get('/questions/1')
-      .end(verifyQuestion(done));
+    it('should return 401 if not authenticated', function(done) {
+      createQuestion({id: 1}).then(function() {
+        createQuestion({id: 2, questionText: 'Wrong question'}).then(function() {
+          chai.request(server)
+            .get('/questions/1')
+            .end(function(err, res) {
+              expect(res.status).equal(401);
+              done();
+            });
+        });
+      });
+    });
   });
 
-  it('should create a new question on /questions PUT', function(done) {
-    var question = {
-      questionText: 'A great question',
-      Choices: [{ choiceText: 'Choice 1'}, { choiceText: 'Choice 2'}]
-    };
+  describe('on /questions PUT', function(done) {
+    it('should create a new question on /questions PUT', function(done) {
+      var question = {
+        questionText: 'A great question',
+        Choices: [{ choiceText: 'Choice 1'}, { choiceText: 'Choice 2'}]
+      };
 
-    chai.request(server)
-      .post('/questions')
-      .send(question)
-      .end(verifyQuestion(done));
+      chai.request(server)
+        .post('/questions')
+        .auth('admin', 'letmein')
+        .send(question)
+        .end(verifyQuestion(done));
+    });
+
+    it('should return 401 if not authenticated', function(done) {
+      var question = {
+        questionText: 'A great question',
+        Choices: [{ choiceText: 'Choice 1'}, { choiceText: 'Choice 2'}]
+      };
+
+      chai.request(server)
+        .post('/questions')
+        .send(question)
+        .end(function(err, res) {
+          expect(res.status).equal(401);
+          done();
+        });
+    });
   });
-
 });

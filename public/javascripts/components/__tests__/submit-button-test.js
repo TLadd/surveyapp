@@ -25,25 +25,24 @@ describe('SubmitButton', () => {
   it('renders a submit button', () => {
     const el = renderComponent();
 
-    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'input');
+    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'button');
 
-    expect(button.type).toEqual('button');
-    expect(button.value).toEqual('Submit');
+    expect(button.textContent).toEqual('Submit');
     expect(button.disabled).toEqual(false);
   });
 
   it('renders a disabled submit button', () => {
     const el = renderComponent({disabled: true});
 
-    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'input');
+    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'button');
 
     expect(button.disabled).toEqual(true);
   });
 
   it('calls onSubmit when the button is clicked', () => {
-    const el = renderComponent({disabled: true});
+    const el = renderComponent();
 
-    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'input');
+    const button = TestUtils.findRenderedDOMComponentWithTag(el, 'button');
     TestUtils.Simulate.click(button);
 
     expect(el.props.onSubmit).toBeCalled();

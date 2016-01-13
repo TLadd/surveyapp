@@ -3,10 +3,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-
 .survey {
   max-width: 40em;
   margin: 0 auto;
@@ -14,15 +10,15 @@ a {
 
 .survey-question {
   word-wrap: break-word;
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
 }
 
 .survey-choices {
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
 }
 
 .survey-choice {
-  min-height: 3rem;
+  min-height: 3em;
   border-radius: 5px;
   margin-bottom: 5px;
   padding-left: 5px;
@@ -42,10 +38,31 @@ a {
   background-color: lightgreen;
 }
 
-.question-form button {
-  margin-top: 5px;
+.question-form .form-group {
+  margin-bottom: 2em;
 }
 
-.question-form .submit-button {
-  margin-top: 5px;
+.question-form button {
+  margin-top: 0.5em;
+}
+
+.addchoice-button {
+  margin-right: 0.5em;
+}
+
+.choice-stat {
+  float: left;
+  margin-bottom: 2em;
+  margin-right: 1em;
+  padding: 1em;
+  background-color: lightgray;
+}
+
+.choice-label {
+  font-weight: bold;
+  padding-bottom: 1em;
+}
+
+.choice-graph {
+  margin-bottom: 3em;
 }

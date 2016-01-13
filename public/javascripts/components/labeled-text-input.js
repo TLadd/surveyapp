@@ -13,8 +13,9 @@ class LabeledTextInput extends React.Component {
 
     return (
       <div className="survey-labeled-text-input">
-        <div className="survey-input-label">{this.props.label}</div>
+        <h4 className="survey-input-label">{this.props.label}</h4>
         <input  type="text"
+                className="form-control"
                 value={this.props.value}
                 onChange={this.onChange} />
       </div>

@@ -47849,6 +47849,33 @@ var QuestionActions = {
     });
   },
 
+  getQuestion: function getQuestion(id) {
+    return $.ajax({
+      url: '/questions/' + id,
+      type: 'GET',
+      dataType: 'json',
+
+      success: function success(data) {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_COMPLETE,
+          question: data
+        });
+      },
+
+      beforeSend: function beforeSend() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD
+        });
+      },
+
+      error: function error() {
+        AppDispatcher.handleServerAction({
+          type: QuestionConstants.QUESTION_LOAD_ERROR
+        });
+      }
+    });
+  },
+
   getAll: function getAll() {
     return $.ajax({
       url: '/questions',
@@ -48186,7 +48213,7 @@ var Question = function (_React$Component) {
         "div",
         { className: "survey-question" },
         React.createElement(
-          "span",
+          "h3",
           { className: "survey-question-text" },
           this.props.questionText
         )
@@ -48229,12 +48256,11 @@ var SubmitButton = function (_React$Component) {
     key: "render",
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "submit-button" },
-        React.createElement("input", { type: "button",
-          value: "Submit",
+        "button",
+        { className: "btn btn-primary",
           disabled: this.props.disabled,
-          onClick: this.props.onSubmit })
+          onClick: this.props.onSubmit },
+        "Submit"
       );
     }
   }]);
@@ -48409,7 +48435,11 @@ var QuestionConstants = {
 
   'QUESTION_SUBMIT_COMPLETE': 'QUESTION_SUBMIT_COMPLETE',
   'QUESTION_SUBMIT_ERROR': 'QUESTION_SUBMIT_ERROR',
-  'QUESTION_SUBMIT': 'QUESTION_SUBMIT'
+  'QUESTION_SUBMIT': 'QUESTION_SUBMIT',
+
+  'QUESTION_LOAD_COMPLETE': 'QUESTION_LOAD_COMPLETE',
+  'QUESTION_LOAD_ERROR': 'QUESTION_LOAD_ERROR',
+  'QUESTION_LOAD': 'QUESTION_LOAD'
 };
 
 module.exports = QuestionConstants;

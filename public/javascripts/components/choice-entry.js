@@ -9,7 +9,7 @@ class ChoiceEntry extends React.Component {
         <LabeledTextInput label={"Choice " + (this.props.index + 1)}
                           value={this.props.value}
                           onChange={this.props.onChange} />
-        <button onClick={this.props.onDelete}>Delete</button>
+                        <button className="btn btn-danger" onClick={this.props.onDelete}>Delete</button>
       </div>
     );
   }

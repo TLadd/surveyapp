@@ -45,7 +45,7 @@ class QuestionForm extends React.Component {
                           onChange={this.onQuestionChange} />
         </div>
         {choices}
-        <button onClick={this.onAddChoice}>Add Choice</button>
+        <button className="btn btn-default addchoice-button" onClick={this.onAddChoice}>Add Choice</button>
         <SubmitButton onSubmit={this.onSubmit}
                       disabled={!this.isStateValid()} />
       </div>

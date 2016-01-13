@@ -1,6 +1,7 @@
 const AdminQuestionStore = require('../stores/admin-question-store');
 const Container = require('flux/utils').Container;
 const QuestionActions = require('../actions/question-actions');
+const QuestionStats = require('./question-stats');
 const React = require('react');
 
 class AdminQuestion extends React.Component {
@@ -21,9 +22,13 @@ class AdminQuestion extends React.Component {
   }
 
   render() {
+    if(!this.state.question) {
+      return null;
+    }
+
     return (
       <div className="admin-question">
-        {JSON.stringify(this.state.question)}
+        <QuestionStats question={this.state.question} />
       </div>
     );
   }

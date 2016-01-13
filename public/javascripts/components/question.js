@@ -5,7 +5,7 @@ class Question extends React.Component {
   render() {
     return (
       <div className="survey-question">
-        <span className="survey-question-text">{this.props.questionText}</span>
+        <h3 className="survey-question-text">{this.props.questionText}</h3>
       </div>
     );
   }

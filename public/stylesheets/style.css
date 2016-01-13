@@ -38,6 +38,10 @@ body {
   background-color: lightgreen;
 }
 
+.survey-choice-text {
+  font-size: 1.2em;
+}
+
 .question-form .form-group {
   margin-bottom: 2em;
 }

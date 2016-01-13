@@ -1,5 +1,4 @@
 const ChoiceEntry = require('./choice-entry');
-const LabeledTextInput = require('./labeled-text-input');
 const QuestionActions = require('../actions/question-actions');
 const QuestionEntry = require('./question-entry');
 const React = require('react');
@@ -74,7 +73,7 @@ class QuestionForm extends React.Component {
 
   onDeleteChoice(index) {
     this.setState({
-      choices: _.filter(this.state.choices, (choice, i) => index != i)
+      choices: _.filter(this.state.choices, (choice, i) => index !== i)
     });
   }
 

@@ -55801,7 +55801,9 @@ var AdminQuestionList = require('./components/admin-question-list');
 var AdminQuestion = require('./components/admin-question');
 var MainAdmin = require('./components/main-admin');
 var QuestionForm = require('./components/question-form');
+/*eslint-disable */
 var React = require('react');
+/*eslint-enable */
 var ReactDOM = require('react-dom');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -56071,7 +56073,7 @@ ChoiceGraph.propTypes = {
 module.exports = ChoiceGraph;
 
 },{"react":236,"react-chartjs":47}],245:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -56082,7 +56084,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
-var _ = require('lodash');
 
 var ChoiceStat = function (_React$Component) {
   _inherits(ChoiceStat, _React$Component);
@@ -56094,24 +56095,24 @@ var ChoiceStat = function (_React$Component) {
   }
 
   _createClass(ChoiceStat, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return React.createElement(
-        'div',
-        { className: 'choice-stat' },
+        "div",
+        { className: "choice-stat" },
         React.createElement(
-          'div',
-          { className: 'choice-label' },
+          "div",
+          { className: "choice-label" },
           "Choice " + (this.props.index + 1)
         ),
         React.createElement(
-          'div',
-          { className: 'choice-text' },
+          "div",
+          { className: "choice-text" },
           this.props.choice.choiceText
         ),
         React.createElement(
-          'div',
-          { className: 'choice-count' },
+          "div",
+          { className: "choice-count" },
           "Frequency: " + this.props.choice.numChosen
         )
       );
@@ -56128,7 +56129,7 @@ ChoiceStat.propTypes = {
 
 module.exports = ChoiceStat;
 
-},{"lodash":43,"react":236}],246:[function(require,module,exports){
+},{"react":236}],246:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -56356,7 +56357,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ChoiceEntry = require('./choice-entry');
-var LabeledTextInput = require('./labeled-text-input');
 var QuestionActions = require('../actions/question-actions');
 var QuestionEntry = require('./question-entry');
 var React = require('react');
@@ -56451,7 +56451,7 @@ var QuestionForm = function (_React$Component) {
     value: function onDeleteChoice(index) {
       this.setState({
         choices: _.filter(this.state.choices, function (choice, i) {
-          return index != i;
+          return index !== i;
         })
       });
     }
@@ -56480,7 +56480,7 @@ var QuestionForm = function (_React$Component) {
 
 module.exports = QuestionForm;
 
-},{"../actions/question-actions":239,"./choice-entry":243,"./labeled-text-input":247,"./question-entry":249,"./submit-button":254,"lodash":43,"react":236,"react-addons-update":46}],251:[function(require,module,exports){
+},{"../actions/question-actions":239,"./choice-entry":243,"./question-entry":249,"./submit-button":254,"lodash":43,"react":236,"react-addons-update":46}],251:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

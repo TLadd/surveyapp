@@ -6,7 +6,6 @@ const QuestionForm = require('../question-form');
 const React = require('react');
 const SubmitButton = require('../submit-button');
 const TestUtils = require('react-addons-test-utils');
-const _ = require('lodash');
 
 describe('QuestionForm', () => {
 
@@ -23,7 +22,7 @@ describe('QuestionForm', () => {
   it('renders a Question Entry field', () => {
     const el = renderComponent();
 
-    const question = TestUtils.findRenderedComponentWithType(el, QuestionEntry);
+    TestUtils.findRenderedComponentWithType(el, QuestionEntry);
   });
 
   it('renders two ChoiceEntry fields', () => {
@@ -45,7 +44,7 @@ describe('QuestionForm', () => {
   it('renders a submit button', () => {
     const el = renderComponent();
 
-    const submit = TestUtils.findRenderedComponentWithType(el, SubmitButton);
+    TestUtils.findRenderedComponentWithType(el, SubmitButton);
   });
 
   it('updates the question on question change', () => {

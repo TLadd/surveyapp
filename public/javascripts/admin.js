@@ -2,7 +2,9 @@ const AdminQuestionList = require('./components/admin-question-list');
 const AdminQuestion = require('./components/admin-question');
 const MainAdmin = require('./components/main-admin');
 const QuestionForm = require('./components/question-form');
+/*eslint-disable */
 const React = require('react');
+/*eslint-enable */
 const ReactDOM = require('react-dom');
 const ReactRouter = require('react-router');
 const Router = ReactRouter.Router;

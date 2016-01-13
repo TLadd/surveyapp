@@ -1,5 +1,4 @@
 const React = require('react');
-const _ = require('lodash');
 
 class ChoiceStat extends React.Component {
 

@@ -5,7 +5,6 @@ const QuestionActions = require('../../actions/question-actions');
 const React = require('react');
 const SurveyContainer = require('../survey-container');
 const TestUtils = require('react-addons-test-utils');
-const _ = require('lodash');
 
 describe('MainSurvey', () => {
 
@@ -26,7 +25,7 @@ describe('MainSurvey', () => {
   });
 
   it('fetches a random question on load', () => {
-    const el = renderComponent();
+    renderComponent();
 
     expect(QuestionActions.getRandom).toBeCalled();
   });

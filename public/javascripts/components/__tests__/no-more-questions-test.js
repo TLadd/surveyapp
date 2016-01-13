@@ -6,7 +6,7 @@ const TestUtils = require('react-addons-test-utils');
 
 describe('NoMoreQuestions', () => {
 
-  const renderComponent = function(options) {
+  const renderComponent = function() {
     return TestUtils.renderIntoDocument(React.createElement(NoMoreQuestions, {}));
   };
 

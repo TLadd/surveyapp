@@ -4,11 +4,10 @@ const Link = require('react-router').Link;
 const MainAdmin = require('../main-admin');
 const React = require('react');
 const TestUtils = require('react-addons-test-utils');
-const _ = require('lodash');
 
 describe('MainAdmin', () => {
 
-  const renderComponent = function(options) {
+  const renderComponent = function() {
     return TestUtils.renderIntoDocument(React.createElement(MainAdmin, {}));
   };
 

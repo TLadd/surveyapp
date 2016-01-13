@@ -48482,7 +48482,9 @@ module.exports = AppDispatcher;
 'use strict';
 
 var MainSurvey = require('./components/main-survey');
+/*eslint-disable */
 var React = require('react');
+/*eslint-enable */
 var ReactDOM = require('react-dom');
 
 ReactDOM.render(React.createElement(MainSurvey, null), document.getElementById('survey-app'));

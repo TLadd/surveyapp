@@ -3,7 +3,7 @@ var auth = require('../auth');
 var router = express.Router();
 
 router.get('/', auth, function(req, res, next) {
-  res.render('admin', { title: 'Express' });
+  res.render('admin');
 });
 
 module.exports = router;

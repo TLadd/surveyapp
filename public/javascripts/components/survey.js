@@ -21,12 +21,12 @@ class Survey extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.question)) {
+    if(_.isNull(this.props.question)) {
+      return null;
+    } else if(_.isEmpty(this.props.question)) {
       return (
         <NoMoreQuestions/>
       );
-    } else if(!this.props.question) {
-      return null;
     }
 
     return (

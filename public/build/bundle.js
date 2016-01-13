@@ -48369,10 +48369,10 @@ var Survey = function (_React$Component) {
   _createClass(Survey, [{
     key: 'render',
     value: function render() {
-      if (_.isEmpty(this.props.question)) {
-        return React.createElement(NoMoreQuestions, null);
-      } else if (!this.props.question) {
+      if (_.isNull(this.props.question)) {
         return null;
+      } else if (_.isEmpty(this.props.question)) {
+        return React.createElement(NoMoreQuestions, null);
       }
 
       return React.createElement(
